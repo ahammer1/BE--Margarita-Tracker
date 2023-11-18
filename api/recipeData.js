@@ -1,6 +1,6 @@
-import { clientCredentials } from '../utils/client';
+// import { clientCredentials } from '../utils/client';
 
-const endpoint = clientCredentials.databaseURL;
+const endpoint = 'https://localhost:7027';
 
 const getRecipes = () => new Promise((resolve, reject) => {
   fetch(`${endpoint}/api/recipes`, {
@@ -20,7 +20,7 @@ const createRecipes = (payload) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
-  }).then((response) => response.json())
+  })
     .then((data) => resolve(data))
     .catch(reject);
 });
@@ -42,7 +42,7 @@ const updateRecipe = (payload) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
-  }).then((response) => response.json())
+  })
     .then((data) => resolve(Object.values(data)))
     .catch(reject);
 });

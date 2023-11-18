@@ -1,6 +1,6 @@
-import { clientCredentials } from '../utils/client';
+// import { clientCredentials } from '../utils/client';
 
-const endpoint = clientCredentials.databaseURL;
+const endpoint = 'https://localhost:7027';
 
 const getRatings = () => new Promise((resolve, reject) => {
   fetch(`${endpoint}/api/ratings`, {

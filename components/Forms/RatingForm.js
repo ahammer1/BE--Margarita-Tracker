@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useRouter } from 'next/router';
 import { createRatings } from '../../api/ratingData';
 
 const initialState = {
   label: '',
 };
+
 export default function RatingForm({ ratingObj }) {
-  const [formInput, setFormInput] = useState({ label: '' });
-  const [ratingValue] = useState(0);
+  const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
+  const { id } = router.query;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,15 +26,14 @@ export default function RatingForm({ ratingObj }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (ratingObj.id) {
-      //
+      // Handle the case when ratingObj has an id
     } else {
       const payload = {
         label: formInput.label,
-        rating: ratingValue,
       };
       try {
         await createRatings(payload);
-        router.push('/ratings');
+        router.push(`/event/${id}`);
       } catch (error) {
         console.error('Error creating rating:', error);
       }
@@ -41,14 +42,16 @@ export default function RatingForm({ ratingObj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="rating">
-        <Form.Label htmlFor="rating">Rating:</Form.Label>
+      <FloatingLabel controlId="floatingInput3" label="Label" className="mb-3">
         <Form.Control
-          type="number"
-          value={ratingValue}
+          type="text"
+          aria-label="Label"
+          name="label"
+          value={formInput.label}
           onChange={handleChange}
+          required
         />
-      </Form.Group>
+      </FloatingLabel>
       {/* Uncomment and handle comments logic if needed */}
       {/* <Form.Group controlId="comments">
         <Form.Label htmlFor="comments">Comments:</Form.Label>

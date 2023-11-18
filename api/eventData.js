@@ -1,6 +1,6 @@
-import { clientCredentials } from '../utils/client';
+// import { clientCredentials } from '../utils/client';
 
-const endpoint = clientCredentials.databaseURL;
+const endpoint = 'https://localhost:7027';
 
 const getEvents = () => new Promise((resolve, reject) => {
   fetch(`${endpoint}/api/events`, {
@@ -42,7 +42,7 @@ const updateEvent = (payload) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
-  }).then((response) => response.json())
+  })
     .then((data) => resolve(Object.values(data)))
     .catch(reject);
 });

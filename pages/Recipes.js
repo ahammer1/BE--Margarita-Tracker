@@ -17,7 +17,7 @@ function Recipes() {
 
   return (
     <div className="text-center my-4 recipePage">
-      <h1 className="header">TEAMS</h1>
+      <h1 className="header">RECIPES</h1>
       <Link href="/recipe/new" passHref>
         <Button size="sm" variant="outline-info" className="createBtn">New Recipe +</Button>
       </Link>
