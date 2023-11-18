@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
-import { useAuth } from '../../utils/context/authContext';
+// import { useAuth } from '../../utils/context/authContext';
 import { createEvents, updateEvent } from '../../api/eventData';
 
 const initialState = {
@@ -18,7 +18,12 @@ const initialState = {
 function EventForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
-  const { user } = useAuth();
+
+  useEffect(() => {
+    if (obj.id) {
+      setFormInput(obj);
+    }
+  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,11 +38,11 @@ function EventForm({ obj }) {
     if (obj.id) {
       updateEvent(formInput).then(() => router.push(`/event/${obj.id}`));
     } else {
-      const payload = { ...formInput, volunteerId: user.uid };
+      const payload = { ...formInput };
       createEvents(payload).then(({ name }) => {
         const patchPayload = { id: name };
         updateEvent(patchPayload).then(() => {
-          router.push('/events');
+          router.push('/');
         });
       });
     }
@@ -52,8 +57,8 @@ function EventForm({ obj }) {
         <Form.Control
           type="text"
           aria-label="Name"
-          name="Nme"
-          value={formInput.Name}
+          name="name"
+          value={formInput.name}
           onChange={handleChange}
           required
         />
@@ -98,7 +103,7 @@ function EventForm({ obj }) {
       <Form.Group className="mb-3">
         <Form.Label for="start">Date: </Form.Label>
 
-        <Form.Control type="date" id="start" name="createdAt" value={formInput.DateTime} min="2023-10-31" max="2024-1-30" onChange={handleChange} />
+        <Form.Control type="date" id="start" name="DateTime" value={formInput.DateTime} min="2023-10-31" max="2024-1-30" onChange={handleChange} />
 
       </Form.Group>
 
@@ -115,7 +120,7 @@ EventForm.propTypes = {
     description: PropTypes.string,
     type: PropTypes.string,
     DateTime: PropTypes.instanceOf(Date),
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -20,6 +20,12 @@ function RecipeForm({ obj }) {
   const router = useRouter();
   const { user } = useAuth();
 
+  useEffect(() => {
+    if (obj.id) {
+      setFormInput(obj);
+    }
+  }, [obj]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormInput((prevState) => ({
@@ -29,7 +35,7 @@ function RecipeForm({ obj }) {
   };
 
   const handleSubmit = (e) => {
-    e.prrecipeDefault();
+    e.preventDefault();
     if (obj.id) {
       updateRecipe(formInput).then(() => router.push(`/recipe/${obj.id}`));
     } else {
@@ -37,7 +43,7 @@ function RecipeForm({ obj }) {
       createRecipes(payload).then(({ name }) => {
         const patchPayload = { id: name };
         updateRecipe(patchPayload).then(() => {
-          router.push('/recipes');
+          router.push('/Recipes');
         });
       });
     }
@@ -52,8 +58,8 @@ function RecipeForm({ obj }) {
         <Form.Control
           type="text"
           aria-label="Name"
-          name="Nme"
-          value={formInput.Name}
+          name="name"
+          value={formInput.name}
           onChange={handleChange}
           required
         />
@@ -95,11 +101,11 @@ function RecipeForm({ obj }) {
         />
       </FloatingLabel>
 
-      <FloatingLabel controlId="floatingTextarea" label="Preptime" className="mb-3">
+      <FloatingLabel controlId="floatingTextarea" label="PrepTime" className="mb-3">
         <Form.Control
           as="textarea"
           aria-label="PrepTime"
-          name="preptime"
+          name="prepTime"
           value={formInput.prepTime}
           onChange={handleChange}
           required
@@ -117,7 +123,7 @@ RecipeForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     type: PropTypes.string,
-    prepTime: PropTypes.number,
+    prepTime: PropTypes.string,
     id: PropTypes.string,
   }),
 };
