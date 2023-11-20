@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Card, Button } from 'react-bootstrap';
+import {
+  Card, Button, Row, Col,
+} from 'react-bootstrap';
 import Link from 'next/link';
 import { deleteSingleRecipe, getSingleRecipe } from '../../api/recipeData';
 
@@ -30,37 +32,49 @@ function ViewRecipe() {
   }, [id]);
 
   return (
-    <div>
-      <div className="recipeView">
-        <div className="recipeCard">
-          <Card style={{ width: '600px', margin: '10px' }}>
+    <div className="container mt-4">
+      <Row>
+        <Col md={6}>
+          <Card>
+            <Card.Img
+              variant="top"
+              src={recipeDetails.image}
+              alt={recipeDetails.name}
+              style={{ width: '100%', height: 'auto' }}
+            />
+          </Card>
+        </Col>
+        <Col md={6}>
+          <Card>
             <Card.Body>
-              <div className="viewRecipeWrap">
-                <div>
-                  <Card.Img variant="top" src={recipeDetails.image} alt={recipeDetails.name} style={{ width: '300px', margin: '10px' }} />
-                </div>
-                <div>
-                  <Card.Title className="recipeTitle">{recipeDetails.name}</Card.Title>
-                  <h4>Description: {recipeDetails.description}</h4>
-                  <h4>Ingredients: {recipeDetails.ingredients}</h4>
-                  <h4>Prep Time: {recipeDetails.prepTime}</h4>
-                  <Link href={`/recipe/edit/${recipeDetails.id}`} passHref>
-                    <Button className="editBtn m-2" variant="outline-info">EDIT</Button>
-                  </Link>
-                  <Button variant="outline-warning" onClick={deleteThisRecipe} className="deleteBtn m-2">
-                    DELETE
+              <Card.Title className="recipeTitle">{recipeDetails.name}</Card.Title>
+              <p><strong>Description:</strong> {recipeDetails.description}</p>
+              <p><strong>Ingredients:</strong> {recipeDetails.ingredients}</p>
+              <p><strong>Prep Time:</strong> {recipeDetails.prepTime} Minutes</p>
+              <div className="buttons mt-3">
+                <Link href={`/recipe/edit/${recipeDetails.id}`} passHref>
+                  <Button className="editBtn" variant="outline-info">
+                    EDIT
                   </Button>
-                </div>
+                </Link>
+                <Button
+                  variant="outline-warning"
+                  onClick={deleteThisRecipe}
+                  className="deleteBtn ml-2"
+                >
+                  DELETE
+                </Button>
               </div>
             </Card.Body>
           </Card>
-        </div>
-        {/* <div className="viewRatings">{ratings?.map((rating) => (
+        </Col>
+      </Row>
+
+      {/* <div className="viewRatings">{ratings?.map((rating) => (
           <RatingCard key={rating.id} ratingObj={rating} onUpdate={getRecipeDetails} />
         ))}
         </div>
         <RatingForm onSubmit={createRecipeRatings} /> */}
-      </div>
     </div>
   );
 }

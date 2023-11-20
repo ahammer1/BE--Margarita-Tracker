@@ -101,10 +101,17 @@ function EventForm({ obj }) {
       </FloatingLabel>
 
       <Form.Group className="mb-3">
-        <Form.Label for="start">Date: </Form.Label>
+        <Form.Label htmlFor="datetime">Date and Time:</Form.Label>
 
-        <Form.Control type="date" id="start" name="DateTime" value={formInput.DateTime} min="2023-10-31" max="2024-1-30" onChange={handleChange} />
-
+        <Form.Control
+          type="datetime-local"
+          id="datetime"
+          name="DateTime"
+          value={formInput.DateTime}
+          min="2023-10-31T00:00"
+          max="2024-01-30T23:59"
+          onChange={handleChange}
+        />
       </Form.Group>
 
       {/* SUBMIT BUTTON  */}

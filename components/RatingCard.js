@@ -15,7 +15,7 @@ function RatingCard({ ratingObj, onUpdate }) {
       <Card.Body>
         <Card.Title>{ratingObj.label}</Card.Title>
 
-        <Button variant="outline-warning" onClick={deleteThisRating} className="m-2">
+        <Button variant="outline-dark" onClick={deleteThisRating} className="m-2">
           DELETE
         </Button>
       </Card.Body>

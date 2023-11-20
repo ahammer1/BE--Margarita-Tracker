@@ -37,7 +37,7 @@ export default function RatingForm({ eventId }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FloatingLabel controlId="floatingInput3" label="Label" className="mb-3">
+      <FloatingLabel controlId="floatingInput3" label="submit a comment/rating for the event" className="mb-3">
         <Form.Control
           type="text"
           aria-label="Label"
@@ -47,7 +47,7 @@ export default function RatingForm({ eventId }) {
           required
         />
       </FloatingLabel>
-      <Button variant="primary" type="submit">
+      <Button variant="outline-primary" type="submit">
         Submit Rating
       </Button>
     </Form>

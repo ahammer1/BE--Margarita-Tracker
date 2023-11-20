@@ -12,20 +12,25 @@ function EventCard({ eventObj, onUpdate }) {
     }
   };
 
+  const formattedDateTime = new Date(eventObj.dateTime).toLocaleString();
+
   return (
     <Card style={{ width: '18rem', margin: '15px auto' }}>
       <Card.Img className="eventImg" variant="top" src={eventObj.image} alt={eventObj.name} style={{ height: '350px' }} />
       <Card.Body>
         <Card.Title className="eventTitle">{eventObj.name}</Card.Title>
-        <h4>Description {eventObj.description}</h4>
-        <h4>Type {eventObj.type}</h4>
-        <h4>DateTime {eventObj.dateTime}</h4>
+
+        <div className="eventDetails">
+          <p><strong>Description:</strong> {eventObj.description.substring(0, 100)}</p>
+          <p><strong>Type:</strong> {eventObj.type}</p>
+          <p><strong>Date Time:</strong> {formattedDateTime}</p>
+        </div>
 
         <div className="wrapper">
           <Link href={`/event/${eventObj.id}`} passHref>
-            <Button variant="primary" className="viewBtn m-2">VIEW</Button>
+            <Button variant="outline-primary" className="viewBtn m-2">VIEW EVENT</Button>
           </Link>
-          <Button variant="outline-warning" size="sm" onClick={deleteThisEvent} className="deleteBtn m-2">
+          <Button variant="outline-dark" size="sm" onClick={deleteThisEvent} className="deleteBtn m-2">
             DELETE
           </Button>
         </div>
