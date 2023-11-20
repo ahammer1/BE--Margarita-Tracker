@@ -40,7 +40,7 @@ EventCard.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
-    dateTime: PropTypes.number,
+    dateTime: PropTypes.string,
     id: PropTypes.number,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,

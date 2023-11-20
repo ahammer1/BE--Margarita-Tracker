@@ -13,8 +13,8 @@ const getRatings = () => new Promise((resolve, reject) => {
     .then((data) => resolve(data))
     .catch(reject);
 });
-const createRatings = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/api/ratings`, {
+const createRatings = (eventId, payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/events/${eventId}/ratings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

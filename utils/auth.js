@@ -3,7 +3,6 @@ import 'firebase/auth';
 // import { clientCredentials } from './client';
 
 const dbUrl = 'https://localhost:7027';
-console.log(dbUrl, 'dbudl');
 const checkUser = async (uid) => {
   const resp = await fetch(`${dbUrl}/checkuser/${uid}`, {
     method: 'GET',
