@@ -17,7 +17,7 @@ function Events() {
 
   return (
     <div className="text-center my-4 eventPage">
-      <h1 className="header">EVENTS</h1>
+      <h1 className="header">Events</h1>
       <Link href="/event/new" passHref>
         <Button size="sm" variant="outline-info" className="createBtn">New Event +</Button>
       </Link>

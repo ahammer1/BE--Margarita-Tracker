@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Card, Button } from 'react-bootstrap';
+import {
+  Card, Button, Row, Col,
+} from 'react-bootstrap';
 import Link from 'next/link';
-import { deleteSingleEvent, getSingleEvent } from '../../api/eventData';
 import RatingCard from '../../components/RatingCard';
+import { deleteSingleEvent, getSingleEvent } from '../../api/eventData';
 import { createRatings, getRatings } from '../../api/ratingData';
 import RatingForm from '../../components/Forms/RatingForm';
 
@@ -41,42 +43,66 @@ function ViewEvent() {
     }
   };
 
+  const formattedDateTime = new Date(eventDetails.dateTime).toLocaleString();
+
   useEffect(() => {
     getEventDetails();
   }, [id]);
 
   return (
-    <div>
-      <div className="eventView">
-        <div className="eventCard">
-          <Card style={{ width: '600px', margin: '10px' }}>
+    <div className="container">
+      <Row className="mt-4">
+        <Col md={6}>
+          <Card>
+            <Card.Img
+              variant="top"
+              src={eventDetails.image}
+              alt={eventDetails.name}
+              style={{ height: '350px' }}
+            />
+          </Card>
+        </Col>
+        <Col md={6}>
+          <Card>
             <Card.Body>
-              <div className="viewEventWrap">
-                <div>
-                  <Card.Img variant="top" src={eventDetails.image} alt={eventDetails.name} style={{ width: '300px', margin: '10px' }} />
-                </div>
-                <div>
-                  <Card.Title className="eventTitle">{eventDetails.name}</Card.Title>
-                  <h4>Description: {eventDetails.description}</h4>
-                  <h4>Type: {eventDetails.type}</h4>
-                  <h4>Date Time: {eventDetails.dateTime}</h4>
-                  <Link href={`/event/edit/${eventDetails.id}`} passHref>
-                    <Button className="editBtn m-2" variant="outline-info">EDIT</Button>
-                  </Link>
-                  <Button variant="outline-warning" onClick={deleteThisEvent} className="deleteBtn m-2">
-                    DELETE
+              <Card.Title className="eventTitle">{eventDetails.name}</Card.Title>
+              <p><strong>Description:</strong> {eventDetails.description}</p>
+              <p><strong>Type:</strong> {eventDetails.type}</p>
+              <p><strong>Date Time:</strong> {formattedDateTime}</p>
+              <div className="buttons">
+                <Link href={`/event/edit/${eventDetails.id}`} passHref>
+                  <Button className="editBtn" variant="outline-info">
+                    EDIT
                   </Button>
-                </div>
+                </Link>
+                <Button
+                  variant="outline-warning"
+                  onClick={deleteThisEvent}
+                  className="deleteBtn ml-2"
+                >
+                  DELETE
+                </Button>
               </div>
             </Card.Body>
           </Card>
-        </div>
-        <div className="viewRatings">{ratings?.map((rating) => (
-          <RatingCard key={rating.id} ratingObj={rating} onUpdate={getEventDetails} />
-        ))}
-        </div>
-        <RatingForm eventId={id} onSubmit={createRating} onUpdate={getEventDetails} />
-      </div>
+        </Col>
+      </Row>
+
+      <Row className="mt-4">
+        <Col>
+          <RatingForm eventId={id} onSubmit={createRating} onUpdate={getEventDetails} />
+        </Col>
+      </Row>
+
+      <Row className="mt-4">
+        <Col>
+          <div className="viewRatings">
+            {ratings?.map((rating) => (
+              <RatingCard key={rating.id} ratingObj={rating} onUpdate={getEventDetails} />
+            ))}
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 }

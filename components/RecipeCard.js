@@ -17,15 +17,15 @@ function EventCard({ recipeObj, onUpdate }) {
       <Card.Img className="recipeImg" variant="top" src={recipeObj.image} alt={recipeObj.name} style={{ height: '350px' }} />
       <Card.Body>
         <Card.Title className="recipeTitle">{recipeObj.name}</Card.Title>
-        <h4>Description {recipeObj.description}</h4>
-        <h4>Ingredients {recipeObj.ingredients}</h4>
-        <h4>PrepTime {recipeObj.prepTime}</h4>
+        {/* <h6><strong>Description:</strong> {recipeObj.description}</h6> */}
+        {/* <h6><strong>Ingredients:</strong> {recipeObj.ingredients}</h6> */}
+        <h6><strong>Prep Time:</strong> {recipeObj.prepTime} Minutes </h6>
 
         <div className="wrapper">
           <Link href={`/recipe/${recipeObj.id}`} passHref>
-            <Button variant="primary" className="viewBtn m-2">VIEW</Button>
+            <Button variant="outline-primary" className="viewBtn m-2">VIEW</Button>
           </Link>
-          <Button variant="outline-warning" size="sm" onClick={deleteThisEvent} className="deleteBtn m-2">
+          <Button variant="outline-dark" size="sm" onClick={deleteThisEvent} className="deleteBtn m-2">
             DELETE
           </Button>
         </div>
