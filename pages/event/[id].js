@@ -4,7 +4,7 @@ import { Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { deleteSingleEvent, getSingleEvent } from '../../api/eventData';
 import RatingCard from '../../components/RatingCard';
-import { getRatings } from '../../api/ratingData';
+import { createRatings, getRatings } from '../../api/ratingData';
 import RatingForm from '../../components/Forms/RatingForm';
 
 function ViewEvent() {
@@ -32,9 +32,9 @@ function ViewEvent() {
     }
   };
 
-  const createEventRatings = async (ratingData) => {
+  const createRating = async (eventId, ratingData) => {
     try {
-      await createEventRatings(id, ratingData);
+      await createRatings(eventId, ratingData);
       getEventDetails();
     } catch (error) {
       console.error('Error submitting rating:', error);
@@ -75,7 +75,7 @@ function ViewEvent() {
           <RatingCard key={rating.id} ratingObj={rating} onUpdate={getEventDetails} />
         ))}
         </div>
-        <RatingForm onSubmit={createEventRatings} />
+        <RatingForm eventId={id} onSubmit={createRating} onUpdate={getEventDetails} />
       </div>
     </div>
   );
