@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
+import { useAuth } from '../../utils/context/authContext';
 import { createRecipes, updateRecipe } from '../../api/recipeData';
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
 function RecipeForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (obj.id) {
@@ -37,7 +39,7 @@ function RecipeForm({ obj }) {
     if (obj.id) {
       updateRecipe(formInput).then(() => router.push(`/recipe/${obj.id}`));
     } else {
-      const payload = { ...formInput };
+      const payload = { ...formInput, UserId: user.uid };
       createRecipes(payload).then(({ name }) => {
         const patchPayload = { id: name };
         updateRecipe(patchPayload).then(() => {

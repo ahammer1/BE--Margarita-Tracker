@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
-// import { useAuth } from '../../utils/context/authContext';
+import { useAuth } from '../../utils/context/authContext';
 import { createEvents, updateEvent } from '../../api/eventData';
 
 const initialState = {
@@ -18,6 +18,7 @@ const initialState = {
 function EventForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (obj.id) {
@@ -38,7 +39,7 @@ function EventForm({ obj }) {
     if (obj.id) {
       updateEvent(formInput).then(() => router.push(`/event/${obj.id}`));
     } else {
-      const payload = { ...formInput };
+      const payload = { ...formInput, UserId: user.uid };
       createEvents(payload).then(({ name }) => {
         const patchPayload = { id: name };
         updateEvent(patchPayload).then(() => {
