@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { deleteSingleRecipe } from '../api/recipeData';
+// import { deleteSingleRecipe } from '../api/recipeData';
 
-function EventCard({ recipeObj, onUpdate }) {
-  const deleteThisEvent = () => {
-    if (window.confirm(`Delete ${recipeObj.name}?`)) {
-      deleteSingleRecipe(recipeObj.id).then(() => onUpdate());
-    }
-  };
+function EventCard({ recipeObj }) {
+  // const deleteThisEvent = () => {
+  //   if (window.confirm(`Delete ${recipeObj.name}?`)) {
+  //     deleteSingleRecipe(recipeObj.id).then(() => onUpdate());
+  //   }
+  // };
 
   return (
     <Card style={{ width: '18rem', margin: '15px auto' }}>
@@ -25,9 +25,9 @@ function EventCard({ recipeObj, onUpdate }) {
           <Link href={`/recipe/${recipeObj.id}`} passHref>
             <Button variant="outline-primary" className="viewBtn m-2">VIEW</Button>
           </Link>
-          <Button variant="outline-dark" size="sm" onClick={deleteThisEvent} className="deleteBtn m-2">
+          {/* <Button variant="outline-dark" size="sm" onClick={deleteThisEvent} className="deleteBtn m-2">
             DELETE
-          </Button>
+          </Button> */}
         </div>
       </Card.Body>
     </Card>
@@ -43,7 +43,7 @@ EventCard.propTypes = {
     prepTime: PropTypes.number,
     id: PropTypes.number,
   }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
+  // onUpdate: PropTypes.func.isRequired,
 };
 
 export default EventCard;

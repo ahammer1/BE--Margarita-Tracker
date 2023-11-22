@@ -1,9 +1,13 @@
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { deleteSingleRating } from '../api/ratingData';
+import { useAuth } from '../utils/context/authContext';
 
 function RatingCard({ ratingObj, onUpdate }) {
+  const [authUser] = useState();
+  const { user } = useAuth();
   const deleteThisRating = () => {
     if (window.confirm('Do you want to delete this rating?')) {
       deleteSingleRating(ratingObj.id).then(() => onUpdate());
@@ -14,13 +18,13 @@ function RatingCard({ ratingObj, onUpdate }) {
     <Card style={{ width: '18rem', margin: '10px' }}>
       <Card.Body>
         <Card.Title>{ratingObj.label}</Card.Title>
-
-        <Button variant="outline-dark" onClick={deleteThisRating} className="m-2">
-          DELETE
-        </Button>
+        {authUser?.userID === user?.userID && (
+          <Button variant="outline-dark" onClick={deleteThisRating} className="m-2">
+            DELETE
+          </Button>
+        )}
       </Card.Body>
     </Card>
-
   );
 }
 

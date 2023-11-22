@@ -3,21 +3,24 @@ import 'firebase/auth';
 // import { clientCredentials } from './client';
 
 const dbUrl = 'https://localhost:7027';
-const checkUser = async (uid) => {
-  const resp = await fetch(`${dbUrl}/checkuser/${uid}`, {
+
+const checkUser = (uid) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/api/users/${uid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-  });
-
-  if (resp.status === 404) {
-    return {};
-  }
-
-  return resp.json();
-};
+  })
+    .then((resp) => {
+      if (resp.status === 204) {
+        resolve({});
+      } else {
+        resolve(resp.json());
+      }
+    })
+    .catch(reject);
+});
 
 const registerUser = (userInfo) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/register`, {

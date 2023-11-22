@@ -4,10 +4,13 @@ import {
   Card, Button, Row, Col,
 } from 'react-bootstrap';
 import Link from 'next/link';
+import { useAuth } from '../../utils/context/authContext';
 import { deleteSingleRecipe, getSingleRecipe } from '../../api/recipeData';
 
 function ViewRecipe() {
   const [recipeDetails, setRecipeDetails] = useState({});
+  const [authUser] = useState();
+  const { user } = useAuth();
   const router = useRouter();
   const { id } = router.query;
 
@@ -51,6 +54,8 @@ function ViewRecipe() {
               <p><strong>Description:</strong> {recipeDetails.description}</p>
               <p><strong>Ingredients:</strong> {recipeDetails.ingredients}</p>
               <p><strong>Prep Time:</strong> {recipeDetails.prepTime} Minutes</p>
+            </Card.Body>
+            {authUser?.firebaseUid === user?.userID && (
               <div className="buttons mt-3">
                 <Link href={`/recipe/edit/${recipeDetails.id}`} passHref>
                   <Button className="editBtn" variant="outline-info">
@@ -65,18 +70,23 @@ function ViewRecipe() {
                   DELETE
                 </Button>
               </div>
-            </Card.Body>
+            )}
           </Card>
         </Col>
       </Row>
 
-      {/* <div className="viewRatings">{ratings?.map((rating) => (
-          <RatingCard key={rating.id} ratingObj={rating} onUpdate={getRecipeDetails} />
-        ))}
-        </div>
-        <RatingForm onSubmit={createRecipeRatings} /> */}
+      <Row className="mt-4">
+        <Col>
+          {/* Uncomment the following lines if you want to include ratings and a form */}
+          {/* <div className="viewRatings">
+            {ratings?.map((rating) => (
+              <RatingCard key={rating.id} ratingObj={rating} onUpdate={getRecipeDetails} />
+            ))}
+          </div>
+          <RatingForm onSubmit={createRecipeRatings} /> */}
+        </Col>
+      </Row>
     </div>
   );
 }
-
 export default ViewRecipe;
