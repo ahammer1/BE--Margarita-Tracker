@@ -5,7 +5,7 @@ import 'firebase/auth';
 const dbUrl = 'https://localhost:7027';
 
 const checkUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/checkuser/${uid}`, {
+  fetch(`${dbUrl}/api/users/${uid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

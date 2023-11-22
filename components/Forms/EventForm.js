@@ -39,12 +39,10 @@ function EventForm({ obj }) {
     if (obj.id) {
       updateEvent(formInput).then(() => router.push(`/event/${obj.id}`));
     } else {
-      const payload = { ...formInput, UserId: user.uid };
-      createEvents(payload).then(({ name }) => {
-        const patchPayload = { id: name };
-        updateEvent(patchPayload).then(() => {
-          router.push('/');
-        });
+      const payload = { ...formInput, userId: user.id };
+      console.log(payload, 'payload');
+      createEvents(payload).then(() => {
+        router.push('/');
       });
     }
   };

@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import Link from 'next/link';
 import RatingCard from '../../components/RatingCard';
+// import { useAuth } from '../../utils/context/authContext';
 import { deleteSingleEvent, getSingleEvent } from '../../api/eventData';
 import { createRatings, getRatings } from '../../api/ratingData';
 import RatingForm from '../../components/Forms/RatingForm';
@@ -13,11 +14,13 @@ function ViewEvent() {
   const [eventDetails, setEventDetails] = useState({});
   const [ratings, setRatings] = useState([]);
   const router = useRouter();
+  const [authUser] = useState();
+  // const { user } = useAuth();
   const { id } = router.query;
 
   const deleteThisEvent = () => {
     if (window.confirm(`Delete ${eventDetails.name}?`)) {
-      deleteSingleEvent(eventDetails.id).then(() => router.push('/events'));
+      deleteSingleEvent(eventDetails.id).then(() => router.push('/'));
     }
   };
 
@@ -69,22 +72,24 @@ function ViewEvent() {
               <p><strong>Description:</strong> {eventDetails.description}</p>
               <p><strong>Type:</strong> {eventDetails.type}</p>
               <p><strong>Date Time:</strong> {formattedDateTime}</p>
-              <div className="buttons">
-                <Link href={`/event/edit/${eventDetails.id}`} passHref>
-                  <Button className="editBtn" variant="outline-info">
-                    EDIT
-                  </Button>
-                </Link>
-                <Button
-                  variant="outline-warning"
-                  onClick={deleteThisEvent}
-                  className="deleteBtn ml-2"
-                >
-                  DELETE
-                </Button>
-              </div>
             </Card.Body>
           </Card>
+          {authUser?.firebaseUid === eventDetails?.UserId && (
+            <div className="buttons">
+              <Link href={`/event/edit/${eventDetails.id}`} passHref>
+                <Button className="editBtn" variant="outline-info">
+                  EDIT
+                </Button>
+              </Link>
+              <Button
+                variant="outline-warning"
+                onClick={deleteThisEvent}
+                className="deleteBtn ml-2"
+              >
+                DELETE
+              </Button>
+            </div>
+          )}
         </Col>
       </Row>
 
