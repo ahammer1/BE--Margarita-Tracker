@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { createRatings } from '../../api/ratingData';
+import { useAuth } from '../../utils/context/authContext';
 
 const initialState = {
   label: '',
@@ -10,6 +11,7 @@ const initialState = {
 
 export default function RatingForm({ eventId }) {
   const [formInput, setFormInput] = useState(initialState);
+  const { user } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,16 +22,19 @@ export default function RatingForm({ eventId }) {
     }));
   };
 
+  console.warn(user, 'user');
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(user.id, 'user');
     if (formInput.label.trim() !== '') {
       const newRating = {
         label: formInput.label,
+        userId: user.id,
       };
+      console.log(newRating, 'newRating');
       createRatings(eventId, newRating);
       setFormInput(initialState);
-      window.location.reload();
     } else {
       console.error('Label cannot be null or empty');
     }
@@ -55,5 +60,12 @@ export default function RatingForm({ eventId }) {
 }
 
 RatingForm.propTypes = {
+  obj: PropTypes.shape({
+    id: PropTypes.number,
+  }),
   eventId: PropTypes.string.isRequired,
+};
+
+RatingForm.defaultProps = {
+  obj: initialState,
 };

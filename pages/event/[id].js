@@ -5,17 +5,18 @@ import {
 } from 'react-bootstrap';
 import Link from 'next/link';
 import RatingCard from '../../components/RatingCard';
-// import { useAuth } from '../../utils/context/authContext';
+import { useAuth } from '../../utils/context/authContext';
 import { deleteSingleEvent, getSingleEvent } from '../../api/eventData';
 import { createRatings, getRatings } from '../../api/ratingData';
 import RatingForm from '../../components/Forms/RatingForm';
+import { checkUser } from '../../utils/auth';
 
 function ViewEvent() {
   const [eventDetails, setEventDetails] = useState({});
   const [ratings, setRatings] = useState([]);
   const router = useRouter();
-  const [authUser] = useState();
-  // const { user } = useAuth();
+  const [, setAuthUser] = useState();
+  const { user } = useAuth();
   const { id } = router.query;
 
   const deleteThisEvent = () => {
@@ -50,6 +51,7 @@ function ViewEvent() {
 
   useEffect(() => {
     getEventDetails();
+    checkUser(user.id).then((data) => setAuthUser(data));
   }, [id]);
 
   return (
@@ -74,7 +76,7 @@ function ViewEvent() {
               <p><strong>Date Time:</strong> {formattedDateTime}</p>
             </Card.Body>
           </Card>
-          {authUser?.firebaseUid === eventDetails?.UserId && (
+          {eventDetails?.userId === user.id && (
             <div className="buttons">
               <Link href={`/event/edit/${eventDetails.id}`} passHref>
                 <Button className="editBtn" variant="outline-info">
