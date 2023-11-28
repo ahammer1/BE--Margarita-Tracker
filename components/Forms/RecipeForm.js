@@ -39,7 +39,7 @@ function RecipeForm({ obj }) {
     if (obj.id) {
       updateRecipe(formInput).then(() => router.push(`/recipe/${obj.id}`));
     } else {
-      const payload = { ...formInput, UserId: user.uid };
+      const payload = { ...formInput, UserId: user.id };
       createRecipes(payload).then(({ name }) => {
         const patchPayload = { id: name };
         updateRecipe(patchPayload).then(() => {

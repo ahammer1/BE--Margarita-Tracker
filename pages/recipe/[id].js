@@ -6,10 +6,11 @@ import {
 import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import { deleteSingleRecipe, getSingleRecipe } from '../../api/recipeData';
+import { checkUser } from '../../utils/auth';
 
 function ViewRecipe() {
   const [recipeDetails, setRecipeDetails] = useState({});
-  const [authUser] = useState();
+  const [, setAuthUser] = useState();
   const { user } = useAuth();
   const router = useRouter();
   const { id } = router.query;
@@ -32,6 +33,7 @@ function ViewRecipe() {
 
   useEffect(() => {
     getRecipeDetails();
+    checkUser(user.id).then((data) => setAuthUser(data));
   }, [id]);
 
   return (
@@ -55,7 +57,7 @@ function ViewRecipe() {
               <p><strong>Ingredients:</strong> {recipeDetails.ingredients}</p>
               <p><strong>Prep Time:</strong> {recipeDetails.prepTime} Minutes</p>
             </Card.Body>
-            {authUser?.firebaseUid === user?.userID && (
+            {recipeDetails?.userId === user.id && (
               <div className="buttons mt-3">
                 <Link href={`/recipe/edit/${recipeDetails.id}`} passHref>
                   <Button className="editBtn" variant="outline-info">
