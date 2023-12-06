@@ -39,7 +39,7 @@ dotnet run
 Start the frontend (in a separate terminal window):
 
 npm start
-The application should now be running. Open your browser and go to http://localhost:3000 to access the Margarita Enthusiasts Hub.
+The application should now be running. Open your browser and go to http://localhost:3000 to access the Margarita Tracker.
 
 # Features
 Event Organization: Plan and organize margarita-themed events in your area.
