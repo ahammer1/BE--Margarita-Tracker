@@ -34,14 +34,10 @@ Run the application:
 
 Start the backend:
 
-bash
 Copy code
-cd server
 dotnet run
 Start the frontend (in a separate terminal window):
 
-
-cd client
 npm start
 The application should now be running. Open your browser and go to http://localhost:3000 to access the Margarita Enthusiasts Hub.
 
