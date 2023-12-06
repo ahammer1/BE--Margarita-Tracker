@@ -1,4 +1,4 @@
-Margarita Enthusiasts Hub
+Margarita Tracker
 Introduction
 Welcome to the Margarita Enthusiasts Hub! This project is a platform where margarita lovers can come together to organize events, share their favorite recipes, and connect with fellow enthusiasts. Whether you're a seasoned mixologist or just enjoy a good margarita, this space is for you.
 
