@@ -20,8 +20,10 @@ Install dependencies:
 bash
 Copy code
 # For the frontend
-cd client
-npm install
+From your command line, be in the root directory and run npm install OR npm i for short.
+Next, run npm run prepare. This command sets up husky to track eslint errors on commit that will make your deploy fail on Netlify.
+To start your application, run npm run dev. THIS IS THE COMMAND YOU WILL USE TO RUN YOUR DEVELOPMENT SERVER FROM NOW ON.
+Open http://localhost:3000 with your browse
 
 # For the backend
 cd ../server
@@ -45,21 +47,14 @@ cd client
 npm start
 The application should now be running. Open your browser and go to http://localhost:3000 to access the Margarita Enthusiasts Hub.
 
-Features
+#Features
 Event Organization: Plan and organize margarita-themed events in your area.
 Recipe Sharing: Share your favorite margarita recipes and discover new ones.
 Community Interaction: Connect with other margarita enthusiasts through comments and discussions.
 Contributing
 We welcome contributions from the community! If you have ideas for improvements or new features, feel free to open an issue or submit a pull request.
 
-Acknowledgments
-Special thanks to all the margarita enthusiasts who contributed to this project.
-Cheers to the open-source community for inspiration and support.
-Enjoy the Margarita Tracker! 
-Contributing
-We welcome contributions from the community! If you have ideas for improvements or new features, feel free to open an issue or submit a pull request.
-
-Acknowledgments
+#Acknowledgments
 Special thanks to all the margarita enthusiasts who contributed to this project.
 Cheers to the open-source community for inspiration and support.
 Enjoy the Margarita Tracker! 🍹
