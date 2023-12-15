@@ -36,48 +36,48 @@ const deleteSingleRating = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const createEventRatings = async (eventId, ratingData) => {
-  try {
-    const response = await fetch(`${endpoint}/api/events/${eventId}/ratings`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(ratingData),
-    });
+// const createEventRatings = async (eventId, ratingData) => {
+//   try {
+//     const response = await fetch(`${endpoint}/api/events/${eventId}/ratings`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(ratingData),
+//     });
 
-    if (!response.ok) {
-      throw new Error(`Error creating event ratings: ${response.statusText}`);
-    }
+//     if (!response.ok) {
+//       throw new Error(`Error creating event ratings: ${response.statusText}`);
+//     }
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error creating event ratings:', error);
-    throw error;
-  }
-};
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error('Error creating event ratings:', error);
+//     throw error;
+//   }
+// };
 
-const deleteEventRating = (eventId, ratingId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/api/events/${eventId}/ratings/${ratingId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Failed to delete order. Status: ${response.status}`);
-      }
-      resolve(response);
-    })
-    .catch(reject);
-});
+// const deleteEventRating = (eventId, ratingId) => new Promise((resolve, reject) => {
+//   fetch(`${endpoint}/api/events/${eventId}/ratings/${ratingId}`, {
+//     method: 'DELETE',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error(`Failed to delete order. Status: ${response.status}`);
+//       }
+//       resolve(response);
+//     })
+//     .catch(reject);
+// });
 
 export {
   deleteSingleRating,
   createRatings,
   getRatings,
-  createEventRatings,
-  deleteEventRating,
+  // createEventRatings,
+  // deleteEventRating,
 };

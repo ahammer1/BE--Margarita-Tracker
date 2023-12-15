@@ -3,18 +3,18 @@ import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/router';
-import { deleteSingleRating } from '../api/ratingData';
+import { deleteSingleComment } from '../api/commentData';
 import { useAuth } from '../utils/context/authContext';
 import { checkUser } from '../utils/auth';
 
-function RatingCard({ ratingObj, onUpdate }) {
+function CommentCard({ commentObj, onUpdate }) {
   const [, setAuthUser] = useState();
   const { user } = useAuth();
   const router = useRouter();
   const { id } = router.query;
-  const deleteThisRating = () => {
-    if (window.confirm('Do you want to delete this rating?')) {
-      deleteSingleRating(ratingObj.id).then(() => onUpdate());
+  const deleteThisComment = () => {
+    if (window.confirm('Do you want to delete this comment?')) {
+      deleteSingleComment(commentObj.id).then(() => onUpdate());
     }
   };
 
@@ -25,10 +25,10 @@ function RatingCard({ ratingObj, onUpdate }) {
   return (
     <Card style={{ width: '18rem', margin: '10px' }}>
       <Card.Body>
-        <p><strong>User:</strong> {ratingObj.userName} </p>
-        <p>{ratingObj.label}</p>
-        {ratingObj?.userId === user.id && (
-          <Button variant="outline-dark" onClick={deleteThisRating} className="m-2">
+        <p><strong>User:</strong> {commentObj.userName} </p>
+        <p>{commentObj.label}</p>
+        {commentObj?.userId === user.id && (
+          <Button variant="outline-dark" onClick={deleteThisComment} className="m-2">
             DELETE
           </Button>
         )}
@@ -37,8 +37,8 @@ function RatingCard({ ratingObj, onUpdate }) {
   );
 }
 
-RatingCard.propTypes = {
-  ratingObj: PropTypes.shape({
+CommentCard.propTypes = {
+  commentObj: PropTypes.shape({
     label: PropTypes.string,
     id: PropTypes.number,
     userId: PropTypes.number,
@@ -47,4 +47,4 @@ RatingCard.propTypes = {
   onUpdate: PropTypes.func.isRequired,
 };
 
-export default RatingCard;
+export default CommentCard;

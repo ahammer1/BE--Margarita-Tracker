@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { createRatings } from '../../api/ratingData';
+import { createComments } from '../../api/commentData';
 import { useAuth } from '../../utils/context/authContext';
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
   userName: '',
 };
 
-export default function RatingForm({ eventId, onUpdate }) {
+export default function CommentForm({ recipeId, onUpdate }) {
   const [formInput, setFormInput] = useState(initialState);
   const { user } = useAuth();
 
@@ -23,22 +23,23 @@ export default function RatingForm({ eventId, onUpdate }) {
     }));
   };
 
-  console.warn(user, 'user');
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formInput.label.trim() !== '') {
-      const newRating = {
+      const newComment = {
         label: formInput.label,
         userId: user.id,
         userName: user.userName,
       };
 
-      await createRatings(eventId, newRating);
+      // Use async/await to wait for comment creation
+      await createComments(recipeId, newComment);
 
+      // Call the onUpdate prop to trigger a refresh
       onUpdate();
 
+      // Clear the form input
       setFormInput(initialState);
     } else {
       console.error('Label cannot be null or empty');
@@ -47,7 +48,7 @@ export default function RatingForm({ eventId, onUpdate }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FloatingLabel controlId="floatingInput3" label="submit a comment for the event" className="mb-3">
+      <FloatingLabel controlId="floatingInput3" label="submit a comment for the recipe" className="mb-3">
         <Form.Control
           type="text"
           aria-label="Label"
@@ -64,11 +65,11 @@ export default function RatingForm({ eventId, onUpdate }) {
   );
 }
 
-RatingForm.propTypes = {
-  eventId: PropTypes.string.isRequired,
+CommentForm.propTypes = {
+  recipeId: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 
-// RatingForm.defaultProps = {
+// CommentForm.defaultProps = {
 //   obj: initialState,
 // };

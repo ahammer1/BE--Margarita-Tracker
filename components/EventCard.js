@@ -3,15 +3,8 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-// import { deleteSingleEvent } from '../api/eventData';
 
 function EventCard({ eventObj }) {
-  // const deleteThisEvent = () => {
-  //   if (window.confirm(`Delete ${eventObj.name}?`)) {
-  //     deleteSingleEvent(eventObj.id).then(() => onUpdate());
-  //   }
-  // };
-
   const formattedDateTime = new Date(eventObj.dateTime).toLocaleString();
 
   return (
@@ -30,9 +23,6 @@ function EventCard({ eventObj }) {
           <Link href={`/event/${eventObj.id}`} passHref>
             <Button variant="outline-primary" className="viewBtn m-2">VIEW EVENT</Button>
           </Link>
-          {/* <Button variant="outline-dark" size="sm" onClick={deleteThisEvent} className="deleteBtn m-2">
-            DELETE
-          </Button> */}
         </div>
       </Card.Body>
     </Card>
