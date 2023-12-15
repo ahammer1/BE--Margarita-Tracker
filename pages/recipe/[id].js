@@ -7,9 +7,13 @@ import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import { deleteSingleRecipe, getSingleRecipe } from '../../api/recipeData';
 import { checkUser } from '../../utils/auth';
+import CommentCard from '../../components/CommentCard';
+import CommentForm from '../../components/Forms/CommentForm';
+import { getComments, createComments } from '../../api/commentData';
 
 function ViewRecipe() {
   const [recipeDetails, setRecipeDetails] = useState({});
+  const [comments, setComments] = useState([]);
   const [, setAuthUser] = useState();
   const { user } = useAuth();
   const router = useRouter();
@@ -24,17 +28,32 @@ function ViewRecipe() {
   const getRecipeDetails = async () => {
     try {
       const recipeData = await getSingleRecipe(id);
-
       setRecipeDetails(recipeData);
+      const commentArray = await getComments();
+      const filteredComments = commentArray.filter((item) => item.recipeId === recipeData.id);
+      setComments(filteredComments);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const createComment = async (recipeId, commentData) => {
+    try {
+      await createComments(recipeId, commentData);
+      getRecipeDetails();
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+    }
+  };
+
   useEffect(() => {
-    getRecipeDetails();
-    checkUser(user.id).then((data) => setAuthUser(data));
-  }, [id]);
+    const fetchData = async () => {
+      await getRecipeDetails();
+      await checkUser(user.id).then((data) => setAuthUser(data));
+    };
+
+    fetchData();
+  }, [id, user.id]);
 
   return (
     <div className="container mt-4">
@@ -79,13 +98,17 @@ function ViewRecipe() {
 
       <Row className="mt-4">
         <Col>
-          {/* Uncomment the following lines if you want to include ratings and a form */}
-          {/* <div className="viewRatings">
-            {ratings?.map((rating) => (
-              <RatingCard key={rating.id} ratingObj={rating} onUpdate={getRecipeDetails} />
+          <CommentForm recipeId={id} onSubmit={createComment} onUpdate={getRecipeDetails} />
+        </Col>
+      </Row>
+
+      <Row className="mt-4">
+        <Col>
+          <div className="viewRatings">
+            {comments?.map((comment) => (
+              <CommentCard key={comment.id} commentObj={comment} onUpdate={getRecipeDetails} />
             ))}
           </div>
-          <RatingForm onSubmit={createRecipeRatings} /> */}
         </Col>
       </Row>
     </div>
