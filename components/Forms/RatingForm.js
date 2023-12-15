@@ -32,9 +32,9 @@ export default function RatingForm({ eventId }) {
         label: formInput.label,
         userId: user.id,
       };
-      console.log(newRating, 'newRating');
       createRatings(eventId, newRating);
       setFormInput(initialState);
+      window.location.reload();
     } else {
       console.error('Label cannot be null or empty');
     }

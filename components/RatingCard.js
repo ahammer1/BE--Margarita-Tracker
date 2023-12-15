@@ -26,6 +26,7 @@ function RatingCard({ ratingObj, onUpdate }) {
     <Card style={{ width: '18rem', margin: '10px' }}>
       <Card.Body>
         <Card.Title>{ratingObj.label}</Card.Title>
+        <p>{ratingObj.userName}</p>
         {ratingObj?.userId === user.id && (
           <Button variant="outline-dark" onClick={deleteThisRating} className="m-2">
             DELETE
@@ -41,6 +42,7 @@ RatingCard.propTypes = {
     label: PropTypes.string,
     id: PropTypes.number,
     userId: PropTypes.number,
+    userName: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
