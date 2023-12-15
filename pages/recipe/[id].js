@@ -17,7 +17,7 @@ function ViewRecipe() {
 
   const deleteThisRecipe = () => {
     if (window.confirm(`Delete ${recipeDetails.name}?`)) {
-      deleteSingleRecipe(recipeDetails.id).then(() => router.push('/recipes'));
+      deleteSingleRecipe(recipeDetails.id).then(() => router.push('/Recipes'));
     }
   };
 
